@@ -59,7 +59,13 @@ class AdminController extends Controller
      */
     public function show(string $id)
     {
-        //
+         $admin = \App\Models\Admin::find($id);
+
+    if (!$admin) {
+        return response()->json(['message' => 'Admin not found'], 404);
+    }
+
+    return response()->json($admin);
     }
 
     /**
@@ -67,7 +73,11 @@ class AdminController extends Controller
      */
     public function edit(string $id)
     {
-        //
+         $data['Admin'] = \App\Models\Admin::findOrFail($id); 
+    $data['route'] = ['dataAdmin.update', $id]; 
+    $data['method'] = 'put';
+
+    // return view('Admin/form_Admin', $data);
     }
 
     /**
@@ -75,7 +85,21 @@ class AdminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+        'staff_id' => 'required',
+        'email' => 'required', 
+        'password' => 'required', 
+        'role' => 'required', 
+    ]);
+
+    $admin = \App\Models\Admin::findOrFail($id);
+    $admin->staff_id = $request->staff_id;  
+    $admin->email = $request->email; 
+    $admin->password = $request->password; 
+    $admin->role = $request->role; 
+    $admin->save();
+
+    return redirect('dataAdmin');
     }
 
     /**
@@ -83,6 +107,14 @@ class AdminController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+          $admin = \App\Models\Admin::find($id);
+
+    if (!$admin) {
+        return response()->json(['message' => 'Admin not found'], 404);
+    }
+
+    $admin->delete();
+
+    return response()->json(['message' => 'Admin deleted successfully']);
     }
 }
