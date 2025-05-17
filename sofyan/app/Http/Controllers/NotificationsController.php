@@ -11,9 +11,8 @@ class NotificationsController extends Controller
      */
     public function index()
     {
-        $data['System'] = \App\Models\Notifications::all();
-
-         return $data;
+        $data['notifications'] = \App\Models\Notifications::all();
+        return $data;
     }
 
     /**
@@ -21,13 +20,10 @@ class NotificationsController extends Controller
      */
     public function create()
     {
-    $data['Notifications'] = new \App\Models\Notifications(); 
-    $data['route'] = 'dataNotifications.store'; 
-    $data['method'] = 'post';
-    #$data['titleForm'] = 'Form Input Notifications'; 
-    #$data['submitButton'] = 'Submit';
-    #return view('Notifications/form_Notifications', $data);
-
+        $data['notification'] = new \App\Models\Notifications(); 
+        $data['route'] = 'dataNotifications.store'; 
+        $data['method'] = 'post';
+        // return view('Notifications/form_Notifications', $data);
     }
 
     /**
@@ -36,20 +32,23 @@ class NotificationsController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        'notification_id' => 'required',
-        'message' => 'required', 
-        'date' => 'required', 
-        'created_at' => 'required', 
-        'updated_at' => 'required', 
-    ]);
+            'notification_id' => 'required',
+            'message' => 'required',
+            'date' => 'required',
+            'created_at' => 'required',
+            'updated_at' => 'required',
+        ]);
 
-    $inputNotifications = new \App\Models\Event(); 
-    $inputNotifications->name = $request->name;
-    $inputNotifications->event_date = $request->event_date;  
-    $inputNotifications->event_topic = $request->event_topic; 
-    $inputNotifications->save();
-    return redirect('dataNotifications/create'); 
+        $notification = new \App\Models\Notifications();
+        $notification->notification_id = $request->notification_id;
+        $notification->message = $request->message;
+        $notification->date = $request->date;
+        $notification->created_at = $request->created_at;
+        $notification->updated_at = $request->updated_at;
 
+        $notification->save();
+
+        return redirect('dataNotifications');
     }
 
     /**
@@ -57,7 +56,13 @@ class NotificationsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $notification = \App\Models\Notifications::where('notification_id', $id)->first();
+
+        if (!$notification) {
+            return response()->json(['message' => 'Notification not found'], 404);
+        }
+
+        return response()->json($notification);
     }
 
     /**
@@ -65,7 +70,11 @@ class NotificationsController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['notification'] = \App\Models\Notifications::findOrFail($id);
+        $data['route'] = ['dataNotifications.update', $id];
+        $data['method'] = 'put';
+
+        // return view('Notifications/form_Notifications', $data);
     }
 
     /**
@@ -73,7 +82,27 @@ class NotificationsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+            'message' => 'required',
+            'date' => 'required',
+            'created_at' => 'required',
+            'updated_at' => 'required',
+        ]);
+
+        $notification = \App\Models\Notifications::where('notification_id', $id)->first();
+
+        if (!$notification) {
+            return response()->json(['message' => 'Notification not found'], 404);
+        }
+
+        $notification->message = $request->message;
+        $notification->date = $request->date;
+        $notification->created_at = $request->created_at;
+        $notification->updated_at = $request->updated_at;
+
+        $notification->save();
+
+        return response()->json(['message' => 'Notification updated successfully', 'data' => $notification]);
     }
 
     /**
@@ -81,6 +110,14 @@ class NotificationsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $notification = \App\Models\Notifications::where('notification_id', $id)->first();
+
+        if (!$notification) {
+            return response()->json(['message' => 'Notification not found'], 404);
+        }
+
+        $notification->delete();
+
+        return response()->json(['message' => 'Notification deleted successfully']);
     }
 }

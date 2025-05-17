@@ -46,7 +46,7 @@ class UserController extends Controller
         
     ]);
 
-    $inputuser = new \App\Models\Event(); 
+    $inputuser = new \App\Models\userController();
     $inputuser->user_id = $request->user_id;
     $inputuser->name = $request->name;
     $inputuser->email = $request->email;  
@@ -63,7 +63,13 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = \App\Models\userController::where('user_id', $id)->first();
+
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    return response()->json($user);
     }
 
     /**
@@ -71,7 +77,11 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['user'] = \App\Models\userController::findOrFail($id);
+        $data['route'] = ['datauser.update', $id];
+        $data['method'] = 'put';
+
+    // return view('user/form_user', $data);
     }
 
     /**
@@ -79,7 +89,28 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //patch
+        $request->validate([
+        'name' => 'required',
+        'email' => 'required',
+        'role' => 'required',
+        'status' => 'required',
+    ]);
+
+   $user = \App\Models\userController::where('user_id', $id)->first();
+
+
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    $user->name = $request->name;
+    $user->email = $request->email;
+    $user->role = $request->role;
+    $user->status = $request->status;
+
+    $user->save();
+
+    return response()->json(['message' => 'User updated successfully', 'data' => $user]);
     }
 
     /**
@@ -87,6 +118,14 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //delete
+$user = \App\Models\userController::where('user_id', $id)->first();
+
+    if (!$user) {
+        return response()->json(['message' => 'User not found'], 404);
+    }
+
+    $user->delete();
+
+    return response()->json(['message' => 'User deleted successfully']);
     }
 }
