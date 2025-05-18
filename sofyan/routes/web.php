@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+
+#use App\Http\Controllers\UserSofyanController;
 
 use App\Http\Controllers\SystemController;
 
@@ -16,7 +17,8 @@ Route::resource('dataAdmin', AdminController::class);
 
 Route::resource('dataSystem', SystemController::class);
 
-Route::resource('datauser', UserController::class); 
+#Route::resource('dataUser', UserSofyaanController::class);
+
 
 
 

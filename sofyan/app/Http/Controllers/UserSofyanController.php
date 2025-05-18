@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\UserSofyan;
 
-class UserSofyan extends Controller
+class UserSofyanController extends Controller
 {
     public function index()
     {
@@ -15,30 +15,23 @@ class UserSofyan extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'user_id' => 'required',
-            'name' => 'required',
-            'email' => 'required|email',
-            'role' => 'required',
-            'status' => 'required',
-        ]);
+        'user_id' => 'required',
+        'name' => 'required', 
+        'email' => 'required', 
+        'role' => 'required', 
+        'status' => 'required', 
+    ]);
 
-        $user = UserSofyan::create($request->all());
+    $inputUser = new \App\Models\UserSofyan(); 
+    $inputUser->user_id = $request->user_id;
+    $inputUser->name = $request->name;  
+    $inputUser->email = $request->email;
+    $inputUser->role = $request->role;
+    $inputUser->status = $request->status;
+    $inputUser->save();
 
-        return response()->json([
-            'message' => 'User created successfully',
-            'data' => $user
-        ], 201);
-    }
+    return redirect('dataUser'); 
 
-    public function show(string $id)
-    {
-        $user = UserSofyan::where('user_id', $id)->first();
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        return response()->json($user);
     }
 
     public function update(Request $request, string $id)
@@ -58,10 +51,7 @@ class UserSofyan extends Controller
 
         $user->update($request->all());
 
-        return response()->json([
-            'message' => 'User updated successfully',
-            'data' => $user
-        ]);
+        return response()->json(['message' => 'User updated successfully', 'data' => $user]);
     }
 
     public function destroy(string $id)

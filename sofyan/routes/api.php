@@ -1,5 +1,7 @@
 <?php
 
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserSofyanController;
 
-Route::apiResource('users', UserController::class);
+Route::apiResource('user_Sofyan', UserSofyanController::class);
+
+
