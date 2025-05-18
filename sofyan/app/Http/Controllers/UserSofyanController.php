@@ -61,7 +61,8 @@ class UserSofyanController extends Controller
      */
     public function show(string $id)
     {
-        //
+         $user = \App\Models\UserSofyan::findOrFail($id);
+    return response()->json($user);
     }
 
     /**
@@ -69,7 +70,10 @@ class UserSofyanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['UserSofyan'] = \App\Models\UserSofyan::findOrFail($id); 
+        $data['route'] = ['dataevent.update', $id]; 
+        $data['method'] = 'put';
+        return view('UserSofyanController.form_UserSofyanController', $data);
     }
 
     /**
@@ -77,7 +81,18 @@ class UserSofyanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate([
+        'user_id' => 'required',
+        'name' => 'required',
+        'email' => 'required',
+        'role' => 'required',
+        'status' => 'required',
+    ]);
+
+    $user = \App\Models\UserSofyan::findOrFail($id);
+    $user->update($request->only(['user_id', 'name', 'email', 'role', 'status']));
+
+    return response()->json(['message' => 'User updated successfully']);
     }
 
     /**
@@ -85,6 +100,9 @@ class UserSofyanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = \App\Models\UserSofyan::findOrFail($id);
+        $user->delete();
+
+        return response()->json(['message' => 'User deleted successfully']);
     }
 }
