@@ -7,22 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserSofyan extends Model
 {
-    use HasFactory;
-    protected $table = 'user_Sofyan';
-    protected $primaryKey = 'user_id';
-    public $timestamps = false;
-    protected $keyType = 'string';
+     use HasFactory;
+    protected $table = 'user_Sofyan'; 
+  
 
-    protected $fillable = [
-        'user_id',
-        'name',
-        'email',
-        'role',
-        'status',
-    ];
 }
-
-
-
-
-

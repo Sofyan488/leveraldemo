@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-#use App\Http\Controllers\UserSofyanController;
+
 
 use App\Http\Controllers\SystemController;
 
@@ -17,7 +17,10 @@ Route::resource('dataAdmin', AdminController::class);
 
 Route::resource('dataSystem', SystemController::class);
 
-#Route::resource('dataUser', UserSofyaanController::class);
+use App\Http\Controllers\UserSofyanController;
+
+Route::resource('datauser', UserSofyanController::class);
+
 
 
 

@@ -3,67 +3,88 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\UserSofyan;
 
 class UserSofyanController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
-        return response()->json(UserSofyan::all());
+                $data['UserSofyan'] = \App\Models\UserSofyan::all();
+                return $data;
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $data['UserSofyan'] = new \App\Models\UserSofyan(); 
+        $data['route'] = 'dataevent.store'; 
+        $data['method'] = 'post';
+        #$data['titleForm'] = 'Form Input UserSofyanController'; 
+        #$data['submitButton'] = 'Submit';
+        #return view('UserSofyanController/form_UserSofyanController', $data); 
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        $request->validate([
+         $request->validate([
         'user_id' => 'required',
         'name' => 'required', 
         'email' => 'required', 
         'role' => 'required', 
         'status' => 'required', 
+
     ]);
 
-    $inputUser = new \App\Models\UserSofyan(); 
-    $inputUser->user_id = $request->user_id;
-    $inputUser->name = $request->name;  
-    $inputUser->email = $request->email;
-    $inputUser->role = $request->role;
-    $inputUser->status = $request->status;
-    $inputUser->save();
+    $inputUserSofyanController = new \App\Models\Event(); 
+    $inputUserSofyanController->user_id = $request->user_id;
+    $inputUserSofyanController->name = $request->name;
+    $inputUserSofyanController->email = $request->email;  
+    $inputUserSofyanController->role= $request->role; 
+    $inputUserSofyanController->status= $request->status; 
 
-    return redirect('dataUser'); 
+    $inputUserSofyanController->save();
+    #return redirect('datauser'); 
+    return response()->json(['message' => 'User added successfully']);
 
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'role' => 'required',
-            'status' => 'required',
-        ]);
-
-        $user = UserSofyan::where('user_id', $id)->first();
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        $user->update($request->all());
-
-        return response()->json(['message' => 'User updated successfully', 'data' => $user]);
+        //
     }
 
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $id)
     {
-        $user = UserSofyan::where('user_id', $id)->first();
-
-        if (!$user) {
-            return response()->json(['message' => 'User not found'], 404);
-        }
-
-        $user->delete();
-
-        return response()->json(['message' => 'User deleted successfully']);
+        //
     }
 }
