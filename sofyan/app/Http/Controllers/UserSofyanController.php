@@ -43,7 +43,7 @@ class UserSofyanController extends Controller
 
     ]);
 
-    $inputUserSofyanController = new \App\Models\Event(); 
+    $inputUserSofyanController = new \App\Models\UserSofyan(); 
     $inputUserSofyanController->user_id = $request->user_id;
     $inputUserSofyanController->name = $request->name;
     $inputUserSofyanController->email = $request->email;  
