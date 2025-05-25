@@ -17,8 +17,8 @@ Route::resource('dataAdmin', AdminController::class);
 
 Route::resource('dataSystem', SystemController::class);
 
-use App\Http\Controllers\UserSofyanController;
-Route::resource('datauser', UserSofyanController::class);
+#use App\Http\Controllers\UserSofyanController;
+#Route::resource('datauser', UserSofyanController::class);
 
 
 
