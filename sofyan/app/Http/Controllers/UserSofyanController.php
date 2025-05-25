@@ -51,8 +51,7 @@ class UserSofyanController extends Controller
     $inputUserSofyanController->status= $request->status; 
 
     $inputUserSofyanController->save();
-    #return redirect('datauser'); 
-    return response()->json(['message' => 'User added successfully']);
+    return redirect('datauser'); 
 
     }
 

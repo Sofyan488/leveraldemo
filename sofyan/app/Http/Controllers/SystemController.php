@@ -51,7 +51,6 @@ class SystemController extends Controller
     $inputSystem->items_per_page = $request->items_per_page;
     $inputSystem->maintenance_mode = $request->maintenance_mode;
     $inputSystem->save();
-
     return redirect('dataSystem'); 
 
     }
