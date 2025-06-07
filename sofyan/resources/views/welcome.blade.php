@@ -133,6 +133,10 @@
                                 </div>
                             </div>
                         </div>
+                        <div id="app"></div>
+                        <script src="{{ mix('/js/app.js') }}"></script>
+
+
                     </main>
 
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">

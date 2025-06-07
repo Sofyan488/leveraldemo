@@ -20,6 +20,10 @@ Route::resource('dataSystem', SystemController::class);
 #use App\Http\Controllers\UserSofyanController;
 #Route::resource('datauser', UserSofyanController::class);
 
+Route::get('/', function () {
+    return view('app'); 
+});
+
 
 
 
