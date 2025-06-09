@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-use App\Http\Controllers\SystemController;
+
 
 use App\Http\Controllers\AdminController;
 
@@ -15,7 +15,6 @@ Route::resource('dataNotifications', NotificationsController::class);
 
 Route::resource('dataAdmin', AdminController::class); 
 
-Route::resource('dataSystem', SystemController::class);
 
 #use App\Http\Controllers\UserSofyanController;
 #Route::resource('datauser', UserSofyanController::class);

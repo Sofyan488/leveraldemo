@@ -9,13 +9,17 @@ class SystemController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-         $data['System'] = \App\Models\System::all();
+   public function index()
+{
+    $system = \App\Models\System::first();
 
-         return $data;
-
+    if (!$system) {
+        return response()->json(['message' => 'No system settings found'], 404);
     }
+
+    return response()->json($system);
+}
+
 
     /**
      * Show the form for creating a new resource.

@@ -7,17 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class UserSofyan extends Model
 {
-     use HasFactory;
+    use HasFactory;
+
     protected $table = 'user_Sofyan'; 
-  
-protected $fillable = [
+
+    protected $primaryKey = 'user_id';
+
+    protected $fillable = [
         'user_id',
-        'name',
+        'username',
         'email',
         'role',
         'status',
     ];
 
-
-
+    public $timestamps = false; // إذا ما عندك created_at و updated_at في الجدول
 }
